@@ -1,0 +1,87 @@
+print("      Igreja Nossa Senhora do Sagrado Coração")
+print("      Doação e Reutilização de Produtos Eletrônicos")
+
+def adicionar_produto():
+    nome = input("Nome do produto: ")
+    print("Qual a condição do produto?")
+    print("1 - Novo")
+    print("2 - Usado")
+    print("3 - Reparo necessário")
+    condicao_opcao = input("Escolha (1/2/3): ")
+
+    if condicao_opcao == "1":
+        condicao = "Novo"
+    elif condicao_opcao == "2":
+        condicao = "Usado"
+    elif condicao_opcao == "3":
+        condicao = "Reparo necessário"
+    else:
+        condicao = "Condição não informada"
+
+    with open("produtos.txt", "a", encoding="utf-8") as arquivo:
+        arquivo.write(f"{nome} - {condicao}\n")
+
+    print("\n✔ Produto adicionado!\n")
+
+
+def listar_produtos():
+    print("\nProdutos Cadastrados:")
+    try:
+        with open("produtos.txt", "r", encoding="utf-8") as arquivo:
+            produtos = arquivo.readlines()
+            if produtos:
+                for i, p in enumerate(produtos, start=1):
+                    print(f"{i}. {p.strip()}")
+            else:
+                print("Nenhum produto cadastrado.")
+    except FileNotFoundError:
+        print("Nenhum produto cadastrado.")
+
+
+def excluir_produto():
+    try:
+        with open("produtos.txt", "r", encoding="utf-8") as arquivo:
+            produtos = arquivo.readlines()
+
+        if not produtos:
+            print("Nenhum produto disponível para ser removido.")
+            return
+
+        print("\nProdutos:")
+        for i, p in enumerate(produtos, start=1):
+            print(f"{i}. {p.strip()}")
+
+        escolha = input("Digite o número do produto que deseja remover: ")
+
+        if escolha.isdigit():
+            escolha = int(escolha)
+            if 1 <= escolha <= len(produtos):
+                removido = produtos.pop(escolha - 1)
+
+                with open("produtos.txt", "w", encoding="utf-8") as arquivo:
+                    arquivo.writelines(produtos)
+
+                print(f"\n✔ Produto removido: {removido.strip()}\n")
+            else:
+                print("Número inválido.")
+        else:
+            print("Opção inválida.")
+    except FileNotFoundError:
+        print("Nenhum produto cadastrado.")
+
+
+while True:
+    opcao = input("\nDigite '1' para Adicionar produto, '2' para Listar produtos, "
+                  "'3' para Excluir produto ou '4' para Sair: ")
+
+    if opcao == "1":
+        adicionar_produto()
+    elif opcao == "2":
+        listar_produtos()
+    elif opcao == "3":
+        excluir_produto()
+    elif opcao == "4":
+        print("Saindo!")
+        break
+    else:
+        print("Opção inválida!")
