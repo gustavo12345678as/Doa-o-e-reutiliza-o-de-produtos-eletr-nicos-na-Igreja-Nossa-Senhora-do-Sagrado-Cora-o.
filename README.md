@@ -1,2 +1,2 @@
-# Doa-o-e-reutiliza-o-de-produtos-eletr-nicos-na-Igreja-Nossa-Senhora-do-Sagrado-Cora-o.
+doacao-reutilizacao-eletronicos
 Sistema simples de cadastro de produtos, para reutilização e doação. 
